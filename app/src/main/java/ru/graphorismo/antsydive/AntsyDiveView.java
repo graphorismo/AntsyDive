@@ -8,6 +8,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+
 public class AntsyDiveView extends SurfaceView implements
         Runnable{
 
@@ -15,6 +17,9 @@ public class AntsyDiveView extends SurfaceView implements
     public EnemyCreature enemyCreature1;
     public EnemyCreature enemyCreature2;
     public EnemyCreature enemyCreature3;
+    public EnemyCreature enemyCreature4;
+    public EnemyCreature enemyCreature5;
+    public ArrayList<OceanDust> dustList;
 
 
     private Paint paint;
@@ -34,6 +39,18 @@ public class AntsyDiveView extends SurfaceView implements
         enemyCreature1 = new EnemyCreature(context, screenX, screenY);
         enemyCreature2 = new EnemyCreature(context, screenX, screenY);
         enemyCreature3 = new EnemyCreature(context, screenX, screenY);
+        enemyCreature4 = new EnemyCreature(context, screenX, screenY);
+        enemyCreature5 = new EnemyCreature(context, screenX, screenY);
+
+        dustList = new ArrayList<OceanDust>();
+
+        int numSpecs = 40;
+        for (int i = 0; i < numSpecs; i++) {
+            // Where will the dust spawn?
+            OceanDust spec = new OceanDust(screenX, screenY);
+            dustList.add(spec);
+        }
+
 
     }
 
@@ -65,12 +82,23 @@ public class AntsyDiveView extends SurfaceView implements
         enemyCreature1.update(playerSpeed);
         enemyCreature2.update(playerSpeed);
         enemyCreature3.update(playerSpeed);
+        enemyCreature4.update(playerSpeed);
+        enemyCreature5.update(playerSpeed);
+        for (OceanDust dust : dustList) {
+            dust.update(playerSpeed);
+        }
     }
 
     private void draw(){
         if (ourHolder.getSurface().isValid()) {
             canvas = ourHolder.lockCanvas();
-            canvas.drawColor(Color.argb(255, 255, 255, 255));
+            canvas.drawColor(Color.argb(255, 0, 125, 125));
+
+            paint.setColor(Color.argb(255, 255, 255, 255));
+
+            for (OceanDust dust : dustList) {
+                canvas.drawCircle(dust.getX(), dust.getY(), 3, paint);
+            }
 
             canvas.drawBitmap(
                     playerSubmarine.getBitmap(),
@@ -90,7 +118,14 @@ public class AntsyDiveView extends SurfaceView implements
                     (enemyCreature3.getBitmap(),
                             enemyCreature3.getX(),
                             enemyCreature3.getY(), paint);
-
+            canvas.drawBitmap
+                    (enemyCreature4.getBitmap(),
+                            enemyCreature4.getX(),
+                            enemyCreature4.getY(), paint);
+            canvas.drawBitmap
+                    (enemyCreature5.getBitmap(),
+                            enemyCreature5.getX(),
+                            enemyCreature5.getY(), paint);
 
             ourHolder.unlockCanvasAndPost(canvas);
         }

@@ -14,8 +14,8 @@ public class PlayerSubmarine {
     private final int GRAVITY = -12;
     private final int maxY;
     private final int minY;
-    private final int MIN_SPEED = 10;
-    private final int MAX_SPEED = 200;
+    private final int MIN_SPEED = 1;
+    private final int MAX_SPEED = 20;
 
     public PlayerSubmarine(Context context, int screenX, int screenY) {
         x = 50;
@@ -24,8 +24,8 @@ public class PlayerSubmarine {
         bitmap = BitmapFactory.decodeResource
                 (context.getResources(), R.drawable.submarine_player);
         boosting = false;
-        maxY = screenY - bitmap.getHeight();
-        minY = 0;
+        maxY = screenY - bitmap.getHeight()-100;
+        minY = 60;
     }
 
     public void update() {
