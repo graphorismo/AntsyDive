@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -15,14 +16,28 @@ public class AntsyDiveView extends SurfaceView implements
     private Canvas canvas;
     private SurfaceHolder ourHolder;
 
+
     volatile boolean playing;
     Thread gameThread = null;
 
-    public AntsyDiveView(Context context) {
+    public AntsyDiveView(Context context, int screenX, int screenY) {
         super(context);
         ourHolder = getHolder();
         paint = new Paint();
-        playerSubmarine = new PlayerSubmarine(context);
+        playerSubmarine = new PlayerSubmarine(context, screenX, screenY);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_UP:
+                playerSubmarine.setBoosting(false);
+                break;
+            case MotionEvent.ACTION_DOWN:
+                playerSubmarine.setBoosting(true);
+                break;
+        }
+        return true;
     }
 
     @Override
