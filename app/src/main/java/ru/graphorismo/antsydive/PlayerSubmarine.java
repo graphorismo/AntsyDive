@@ -3,6 +3,7 @@ package ru.graphorismo.antsydive;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 
 public class PlayerSubmarine {
 
@@ -17,6 +18,8 @@ public class PlayerSubmarine {
     private final int MIN_SPEED = 1;
     private final int MAX_SPEED = 20;
 
+    private Rect hitBox;
+
     public PlayerSubmarine(Context context, int screenX, int screenY) {
         x = 50;
         y = 50;
@@ -26,6 +29,8 @@ public class PlayerSubmarine {
         boosting = false;
         maxY = screenY - bitmap.getHeight()-100;
         minY = 60;
+
+        hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
     }
 
     public void update() {
@@ -46,6 +51,10 @@ public class PlayerSubmarine {
         if (y > maxY) {
             y = maxY;
         }
+        hitBox.left = x;
+        hitBox.top = y;
+        hitBox.right = x + bitmap.getWidth();
+        hitBox.bottom = y + bitmap.getHeight();
     }
 
     public Bitmap getBitmap() {
@@ -66,5 +75,9 @@ public class PlayerSubmarine {
 
     public void setBoosting(boolean boosting) {
         this.boosting = boosting;
+    }
+
+    public Rect getHitBox() {
+        return hitBox;
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -77,6 +78,28 @@ public class AntsyDiveView extends SurfaceView implements
     }
 
     private void update(){
+
+        if(Rect.intersects
+                (playerSubmarine.getHitBox(), enemyCreature1.getHitBox())) {
+            enemyCreature1.setX(-100);
+        }
+        if(Rect.intersects
+                (playerSubmarine.getHitBox(), enemyCreature2.getHitBox())){
+            enemyCreature2.setX(-100);
+        }
+        if(Rect.intersects
+                (playerSubmarine.getHitBox(), enemyCreature3.getHitBox())){
+            enemyCreature3.setX(-100);
+        }
+        if(Rect.intersects
+                (playerSubmarine.getHitBox(), enemyCreature4.getHitBox())){
+            enemyCreature4.setX(-100);
+        }
+        if(Rect.intersects
+                (playerSubmarine.getHitBox(), enemyCreature5.getHitBox())){
+            enemyCreature5.setX(-100);
+        }
+
         playerSubmarine.update();
         int playerSpeed = playerSubmarine.getSpeed();
         enemyCreature1.update(playerSpeed);

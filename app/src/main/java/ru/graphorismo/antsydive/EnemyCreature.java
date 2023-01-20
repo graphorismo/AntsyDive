@@ -3,6 +3,7 @@ package ru.graphorismo.antsydive;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 
 import java.util.Random;
 
@@ -17,6 +18,8 @@ public class EnemyCreature {
     private int maxY;
     private int minY;
 
+    private Rect hitBox;
+
     public EnemyCreature(Context context, int screenX, int screenY){
         bitmap = BitmapFactory.decodeResource
                 (context.getResources(), R.drawable.creature_enemy);
@@ -29,6 +32,8 @@ public class EnemyCreature {
         speed = generator.nextInt(6)+10;
         x = screenX;
         y = generator.nextInt(maxY) - bitmap.getHeight();
+
+        hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
     }
 
     public void update(int playerSpeed){
@@ -40,6 +45,10 @@ public class EnemyCreature {
             x = maxX;
             y = generator.nextInt(maxY) - bitmap.getHeight();
         }
+        hitBox.left = x;
+        hitBox.top = y;
+        hitBox.right = x + bitmap.getWidth();
+        hitBox.bottom = y + bitmap.getHeight();
     }
 
     public Bitmap getBitmap() {
@@ -50,7 +59,15 @@ public class EnemyCreature {
         return x;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
     public int getY() {
         return y;
+    }
+
+    public Rect getHitBox() {
+        return hitBox;
     }
 }
