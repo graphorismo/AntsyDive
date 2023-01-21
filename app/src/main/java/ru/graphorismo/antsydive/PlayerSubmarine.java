@@ -12,6 +12,8 @@ public class PlayerSubmarine {
     private int x, y;
     private int speed = 0;
 
+    private int shieldStrength;
+
     private final int GRAVITY = -12;
     private final int maxY;
     private final int minY;
@@ -31,6 +33,8 @@ public class PlayerSubmarine {
         minY = 60;
 
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
+
+        shieldStrength = 2;
     }
 
     public void update() {
@@ -79,5 +83,13 @@ public class PlayerSubmarine {
 
     public Rect getHitBox() {
         return hitBox;
+    }
+
+    public int getShieldStrength() {
+        return shieldStrength;
+    }
+
+    public void reduceShieldStrength(){
+        shieldStrength --;
     }
 }
